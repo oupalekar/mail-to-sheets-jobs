@@ -12,7 +12,6 @@ class Filterer:
     def __init__(self, keywords):
         load_dotenv()
         self.keywords = keywords
-        self.job_classifier = joblib.load("job_classifier.joblib")
         # self.ner = pipeline("ner", model="dslim/bert-base-NER", aggregation_strategy="simple")
         self.client = OpenAI(
             base_url = "https://integrate.api.nvidia.com/v1",
