@@ -56,10 +56,12 @@ class Gmail:
 
         title = self.get_email_title(email['payload'])
         body = self.get_email_body(email['payload'])
+        clean_title = utils.clean_string(title)
+        clean_body = utils.clean_string(body)
         internal_date = email['internalDate']
         scraped_email = {
-            'title': title,
-            'body': body,
+            'title': clean_title,
+            'body': clean_body,
             'date': datetime.datetime.fromtimestamp(int(internal_date) / 1000),
             'internal_date': internal_date
         }

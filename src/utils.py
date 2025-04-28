@@ -11,6 +11,7 @@ from google.auth.transport.requests import Request
 import pickle
 from google_auth_oauthlib.flow import InstalledAppFlow
 from googleapiclient.discovery import build
+import re
 # email.py
 # Handles Gmail API authentication and fetching emails
 
@@ -62,4 +63,7 @@ def load_config(file_name = None):
             return None
             
         
-
+CLEANR = re.compile('<.*?>')
+def clean_string(string):
+    cleantext = re.sub(CLEANR, '', string)
+    return cleantext
