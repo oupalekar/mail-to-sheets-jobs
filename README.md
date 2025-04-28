@@ -15,15 +15,16 @@ This project fetches emails from Gmail, analyzes the text, and sends relevant ro
 
 3. **Run the project:**
    ```bash
-   python main.py
+   python src/main.py
    ```
 
 ## File Structure
 
-- `main.py`    : Orchestrates fetching, analyzing, and writing to Sheets
-- `email.py`   : Gmail API authentication and fetching emails
-- `sheets.py`  : Google Sheets API authentication and writing rows
-- `utils.py`   : Helper functions for text analysis
+- `src/main.py`    : Orchestrates fetching, analyzing, and writing to Sheets
+- `src/email.py`   : Gmail API authentication and fetching emails
+- `src/sheets.py`  : Google Sheets API authentication and writing rows
+- `src/utils.py`   : Helper functions for text analysis
+- `src/model.py`   : Calls to Gemma-2b for NER
 - `requirements.txt` : Python dependencies
 - `README.md`  : This file
 
