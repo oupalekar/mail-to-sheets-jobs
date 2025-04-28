@@ -2,6 +2,7 @@ import os
 import base64
 import pickle
 import datetime
+import utils
 from utils import authenticate_google
 from multiprocessing import cpu_count
 from joblib import Parallel, delayed
@@ -27,7 +28,7 @@ class Gmail:
     def fetch_emails_ids(self, last_unix_time=None):
         query = None
         if last_unix_time:
-            query = f'after:{int(last_unix_time)}'
+            query = f'after:{int(last_unix_time / 1000)}'
         all_messages = []
         next_page_token = None
         while True:
@@ -35,7 +36,7 @@ class Gmail:
                 userId='me',
                 q=query,
                 pageToken=next_page_token
-        ).execute()
+            ).execute()
             messages = results.get('messages', [])
             all_messages.extend(messages)
             next_page_token = results.get('nextPageToken')
@@ -62,7 +63,7 @@ class Gmail:
         scraped_email = {
             'title': clean_title,
             'body': clean_body,
-            'date': datetime.datetime.fromtimestamp(int(internal_date) / 1000),
+            'date': str(datetime.datetime.fromtimestamp(int(internal_date) / 1000)),
             'internal_date': internal_date
         }
         return scraped_email

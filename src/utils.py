@@ -63,7 +63,29 @@ def load_config(file_name = None):
             return None
             
         
-CLEANR = re.compile('<.*?>')
+SCRIPT_STYLE = re.compile(r'<(script|style)[^>]*>.*?</\1>', re.DOTALL | re.IGNORECASE)
+HTML_TAGS = re.compile(r'<[^>]+>')
+CURLY_BRACKETS = re.compile(r'\{.*?\}')
+WHITESPACE = re.compile(r'[\r\n\t]+')
+MULTISPACE = re.compile(r' +')
+U_CHARS = re.compile(r'[^\x00-\x7F]+|[^\u0000-\u007F]+')
+URLS = re.compile(r'\S*https?://\S*')
+
 def clean_string(string):
-    cleantext = re.sub(CLEANR, '', string)
+    # Remove script and style blocks
+    cleantext = re.sub(SCRIPT_STYLE, '', string)
+    # Remove all other HTML tags
+    cleantext = re.sub(HTML_TAGS, '', cleantext)
+    # Remove curly-bracketed content
+    cleantext = re.sub(CURLY_BRACKETS, '', cleantext)
+    # Remove tabs/newlines
+    cleantext = re.sub(WHITESPACE, ' ', cleantext)
+    # Normalize multiple spaces
+    cleantext = re.sub(MULTISPACE, ' ', cleantext)
+    # Strip leading/trailing whitespace
+    cleantext = cleantext.strip()
+    # Remove unicode characters
+    cleantext = re.sub(U_CHARS, '', cleantext)
+    # Remove URLs
+    cleantext = re.sub(URLS, '', cleantext)
     return cleantext
