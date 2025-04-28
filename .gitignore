@@ -1,4 +1,6 @@
 credentials.json
 token.pickle
-env
+.env
 __pycache__
+company_positions.json
+scraped_emails.json
